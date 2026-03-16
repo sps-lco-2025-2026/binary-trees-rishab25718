@@ -1,8 +1,5 @@
-﻿
-
-
-
-using System.ComponentModel.Design.Serialization;
+﻿using System.ComponentModel.Design.Serialization;
+using System.Data.SqlTypes;
 using System.Reflection.Metadata.Ecma335;
 using System.Transactions;
 
@@ -180,15 +177,15 @@ public class BinaryTree
         }
     }
 
-    public int LowestCommonAncestor(TreeNode node,int a, int b)
+    public int? LowestCommonAncestor(TreeNode node,int a, int b)
     {
         if (node == null || node._value == a || node._value ==b)
         {
             return node._value;
         }
 
-        int left = LowestCommonAncestor(node._left, a, b);
-        int right = LowestCommonAncestor(node._right, a, b);
+        int? left = LowestCommonAncestor(node._left, a, b);
+        int? right = LowestCommonAncestor(node._right, a, b);
 
         if (left != null && right != null)
         {
@@ -202,6 +199,35 @@ public class BinaryTree
         else
         {
             return right;
+        }
+    }
+
+    public void Delete(int v)
+    {
+        TreeNode current = _root;
+        TreeNode? nodeToRemove = null;
+        bool found = false;
+
+        while (found == false)
+        {
+            if (current._value == v)
+            {
+                found = true;
+                nodeToRemove = current;
+            }
+            else if (v> current._value)
+            {
+                current = current._right;
+            }
+            else
+            {
+                current = current._left;
+            }
+        }
+
+        if (found == true)
+        {
+            nodeToRemove = null;
         }
     }
 }
